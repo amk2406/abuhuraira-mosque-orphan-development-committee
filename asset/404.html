@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>404 · Page Not Found</title>
+  <link rel="stylesheet" href="/font-icon/css/all.min.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=7">
+  <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="/style/404.css">
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+<div class="error-wrapper">
+  <div class="error-card">
+    <!-- Animated 404 -->
+    <div class="error-icon">
+      <i class="fas fa-compass"></i>
+    </div>
+    <div class="error-code">404</div>
+    <div class="error-title">Page not found</div>
+    <div class="error-message">
+      Oops! The page you're looking for seems to have wandered off into the digital wilderness.
+    </div>
+
+    <!-- Action buttons -->
+    <div class="button-group">
+      <a href="#" class="btn-primary" id="homeBtn">
+        <i class="fas fa-home"></i> Back to Home
+      </a>
+      <button class="btn-secondary" id="goBackBtn">
+        <i class="fas fa-arrow-left"></i> Go Back
+      </button>
+    </div>
+    <!-- Help section with contact -->
+    <div class="help-section">
+      <div class="help-title">
+        <i class="fas fa-headset"></i>
+        <span>Still lost?</span>
+      </div>
+      <div class="help-text">
+        If you believe this is an error, <a href="#" id="contactLink">contact our support team</a> and we'll help you find your way.
+      </div>
+    </div>
+
+    <div class="security-foot">
+      <i class="fas fa-lock"></i>
+      <span>Secure connection · Help center available 24/7</span>
+    </div>
+  </div>
+</div>
+
+<div id="toastMessage" class="toast-message"></div>
+
+<script>
+  (function() {
+    const homeBtn = document.getElementById('homeBtn');
+    const goBackBtn = document.getElementById('goBackBtn');
+    const toast = document.getElementById('toastMessage');
+
+    // Smart suggestions based on search input
+    const suggestions = {
+      'dashboard': '/dashboard',
+      'signup': '/account#signup',
+      'signin': '/account#signin',
+      'home': '/',
+      'help': '/help',
+      'support': '/help'
+    };
+
+    function showToast(message, type = 'info') {
+      toast.textContent = message;
+      toast.className = `toast-message ${type}`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Optional: add search button behavior (click on search icon area)
+    const searchWrapper = document.querySelector('.search-wrapper');
+
+    // Home button
+    homeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('🏠 Returning to homepage... (demo navigation)', 'success');
+      window.location.href = '/';
+    });
+
+    // Go back button
+    goBackBtn.addEventListener('click', () => {
+      showToast('⬅️ Going back to previous page...', 'info');
+      window.history.back();
+    });
+
+    // Add floating shapes for visual interest (optional)
+    function addFloatingShapes() {
+      const shapesContainer = document.createElement('div');
+      shapesContainer.className = 'floating-shapes';
+      const shapes = ['●', '◆', '■', '▲', '★', '♦'];
+      for (let i = 0; i < 12; i++) {
+        const shape = document.createElement('div');
+        shape.className = 'shape';
+        shape.textContent = shapes[i % shapes.length];
+        shape.style.left = Math.random() * 100 + '%';
+        shape.style.animationDuration = 15 + Math.random() * 20 + 's';
+        shape.style.animationDelay = Math.random() * 10 + 's';
+        shape.style.fontSize = 20 + Math.random() * 40 + 'px';
+        shape.style.opacity = 0.05 + Math.random() * 0.1;
+        shapesContainer.appendChild(shape);
+      }
+      document.body.appendChild(shapesContainer);
+    }
+
+    // Add subtle animation on page load
+    addFloatingShapes();
+
+    // Simulate that the user might have come from a broken link
+    console.log('404 Error Page — UX optimized with smart search and navigation');
+    
+    // Optional: suggest based on URL hash
+    const hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      setTimeout(() => {
+        showToast(`💡 We noticed you were looking for "${hash.substring(1)}". Try searching for it above!`, 'info');
+      }, 1000);
+    }
+  })();
+</script>
+</body>
+</html>
