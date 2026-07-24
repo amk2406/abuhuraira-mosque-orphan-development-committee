@@ -1,0 +1,9 @@
+{
+    "name": "Abuhuraira Mosque Orphan Foundation",
+    "short_name": "AH Orphan",
+    "start_url": "../index.html",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#4af320"
+}
