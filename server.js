@@ -37,13 +37,4 @@ app.use((req, res) =>{
 
 app.listen(port, () =>{
    log('app started with in port '+ port)
-   webview.spawn({
-   // options for webview
-      title: "Abuhuraira Mosque Orphan Foundation",
-      width: 1024,
-      icon: "http://127.0.0.1:5000/logo.png",
-      height: 768,
-      url: "http://127.0.0.1:5000/",
-   });
 })
-log(webview.exec)
