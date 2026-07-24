@@ -1,7 +1,7 @@
 {
     "name": "Abuhuraira Mosque Orphan Foundation",
-    "short_name": "AH Orphan",
-    "start_url": "../index.html",
+    "short_name": "Abuhuraira Mosque",
+    "start_url": "/",
     "scope": "/",
     "display": "standalone",
     "orientation": "portrait",
