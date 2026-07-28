@@ -2,8 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const express = require('express')
-const cors = require('cors')
-const webview = require('webview')
 
 const port = 5000
 const app = express()
@@ -13,7 +11,7 @@ function randomeByte(length = 2){
    return crypto.randomBytes(length).toString('hex')
 }
 
-app.use(cors(), express.json(), express.static('./static'))
+app.use(express.json(), express.static(path.join(__dirname, './static')))
 
 app.get('/' , (req , res)=>{
    res.status(200).sendFile(path.join(__dirname, './asset/orphan.html'))
