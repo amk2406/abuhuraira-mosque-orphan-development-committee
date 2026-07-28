@@ -18,6 +18,7 @@ function setCache(req, res, next){
 
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'static/')))
+app.use(setCache)
 
 app.get('/' , (req , res)=>{
    res.status(200).sendFile(path.join(__dirname, './asset/orphan.html'))
@@ -42,6 +43,6 @@ app.use((req, res) =>{
    res.status(404).sendFile(path.join(__dirname, './asset/404.html'))  
 })
 
-app.listen(port, () =>{
+app.listen(port, '0.0.0.0', () =>{
    log('app started with in port '+ port)
 })
