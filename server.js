@@ -10,6 +10,11 @@ const log = console.log
 function randomeByte(length = 2){
    return crypto.randomBytes(length).toString('hex')
 }
+function setCache(req, res, next){
+   const oneDay = 3 * 24 * 60 * 60 * 1000;
+   res.setHeader('Expires', new Date(Date.now() + oneDay).toUTCString());
+   next()
+}
 
 app.use(express.json(), express.static(path.join(__dirname, 'static')))
 app.use(express.static(path.join(__dirname, 'static/')))
