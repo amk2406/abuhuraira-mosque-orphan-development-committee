@@ -26,8 +26,11 @@ app.get('/about' , (req , res)=>{
    res.status(200).sendFile(path.join(__dirname, './asset/orphan-about.html'))
 })
 
-app.get('/orphan-request' , (req , res)=>{
-   res.status(200).sendFile(path.join(__dirname, './asset/orphan-request.html'))
+app.get('/logo.png' , (req , res)=>{
+   res.status(200).sendFile(path.join(__dirname, './static/logo.png'))
+})
+
+tatus(200).sendFile(path.join(__dirname, './asset/orphan-request.html'))
 })
 
 app.use((req, res) =>{
