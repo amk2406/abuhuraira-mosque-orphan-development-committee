@@ -16,7 +16,7 @@ function setCache(req, res, next){
    next()
 }
 
-app.use(express.json(), express.static(path.join(__dirname, 'static')))
+app.use(express.json())
 app.use(express.static(path.join(__dirname, 'static/')))
 
 app.get('/' , (req , res)=>{
