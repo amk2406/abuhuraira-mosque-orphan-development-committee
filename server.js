@@ -21,7 +21,7 @@ app.get('/' , (req , res)=>{
 app.get('/search' , (req , res)=>{
    res.status(200).sendFile(path.join(__dirname, './asset/orphan-search.html'))
 })
-
+console.log(path.join(__dirname))
 app.get('/about' , (req , res)=>{
    res.status(200).sendFile(path.join(__dirname, './asset/orphan-about.html'))
 })
