@@ -12,6 +12,7 @@ function randomeByte(length = 2){
 }
 
 app.use(express.json(), express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.join(__dirname, 'static/')))
 
 app.get('/' , (req , res)=>{
    res.status(200).sendFile(path.join(__dirname, './asset/orphan.html'))
