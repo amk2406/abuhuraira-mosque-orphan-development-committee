@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Request to Add Orphan – Abuhuraira Mosque</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link rel="stylesheet" href="./static/font-icon/css/all.min.css">
+  <link rel="stylesheet" href="./static/style/thumb-scroll.css">
+  <link rel="shortcut icon" href="./static/logo.png" type="image/x-icon">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #eef2f7 0%, #e0e8f0 100%);
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Navigation */
+    .top-nav {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+      border-radius: 1.5rem;
+      padding: 0.7rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #1e5631;
+    }
+    .nav-btn {
+      background: white;
+      border: none;
+      padding: 0.6rem 1.3rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+    .nav-btn:hover {
+      background: #eef2e6;
+    }
+
+    /* Main Card */
+    .request-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .warning-banner {
+      background: #fff8e7;
+      border-left: 6px solid #e67e22;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1.8rem;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .warning-banner i {
+      font-size: 1.8rem;
+      color: #e67e22;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1f2e23;
+      margin-bottom: 0.5rem;
+    }
+    .sub {
+      color: #5b6e7e;
+      margin-bottom: 1.8rem;
+      border-bottom: 1px solid #e9ecef;
+      padding-bottom: 0.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+    label {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      color: #2c3e2f;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 1rem;
+      border: 1.5px solid #e2e8f0;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #2b6e3c;
+      box-shadow: 0 0 0 3px rgba(43,110,60,0.1);
+    }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .btn-send {
+      background: #1e5631;
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      width: 100%;
+      border-radius: 2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .btn-send:hover {
+      background: #0f4427;
+      transform: translateY(-2px);
+    }
+    .info-note {
+      background: #f0f6f0;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #2c5a2e;
+      text-align: center;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #6a7c8a;
+    }
+    @media (max-width: 650px) {
+      .row-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="top-nav">
+    <div class="logo"><i class="fas fa-mosque"></i> Abuhuraira OrphanCare</div>
+    <div>
+      <button class="nav-btn" id="backHomeBtn"><i class="fas fa-home"></i> Back to Home</button>
+      <button class="nav-btn" onclick="history.back()" id="backBtn"><i class="fas fa-arrow-left"></i> Go Back</button>
+    </div>
+  </div>
+
+  <div class="request-card">
+    <h2><i class="fas fa-shield-alt"></i> Secure Orphan Addition Request</h2>
+    <div class="sub">For security and verification, new orphan registrations require admin approval.</div>
+
+    <div class="warning-banner">
+      <i class="fas fa-exclamation-triangle"></i>
+      <div><strong>Why this step?</strong> We ensure every orphan is properly verified before adding to the system. Please fill in the details below and send a request to our administrator. You will receive a response within 48 hours.</div>
+    </div>
+
+    <form id="requestForm">
+      <div class="form-group">
+        <label><i class="fas fa-child"></i> Child's Full Name *</label>
+        <input type="text" id="childName" required placeholder="e.g., Aisha Bello">
+      </div>
+
+      <div class="row-2">
+        <div class="form-group">
+          <label><i class="fas fa-calendar-alt"></i> Child's Age / DOB</label>
+          <input type="text" id="childAge" placeholder="e.g., 8 years or 2018-05-12">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-venus-mars"></i> Gender</label>
+          <select id="childGender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-home"></i> Household / Guardian Name *</label>
+        <input type="text" id="guardian" required placeholder="Guardian's full name">
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-question-circle"></i> Reason for adding this orphan *</label>
+        <textarea id="reason" rows="3" required placeholder="Explain why this child needs support, how you know them, any special circumstances..."></textarea>
+      </div>
+
+      <div class="row-2">
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Your Name *</label>
+          <input type="text" id="requesterName" required placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Your Email *</label>
+          <input type="email" id="requesterEmail" required placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-phone-alt"></i> Your Phone (optional)</label>
+        <input type="tel" id="requesterPhone" placeholder="For quick contact">
+      </div>
+
+      <button type="button" class="btn-send" id="sendRequestBtn"><i class="fas fa-paper-plane"></i> Send Request to Admin (Email)</button>
+    </form>
+
+    <div class="info-note">
+      <i class="fas fa-lock"></i> Your request will be sent via your default email client. The admin will review and then grant access to the measurement form or manually create the record. No data is stored online.
+    </div>
+  </div>
+  <footer>
+    <i class="fas fa-shield-alt"></i> Security First – All orphan additions are verified by the mosque committee.
+  </footer>
+</div>
+
+<script>
+  const adminEmail = "hamidu2406@gmail.com"; // CHANGE THIS TO THE REAL ADMIN EMAIL
+  // You can also use a placeholder: [Admin Email Address]
+
+  document.getElementById('sendRequestBtn').addEventListener('click', function() {
+    // Get all values
+    const childName = document.getElementById('childName').value.trim();
+    const childAge = document.getElementById('childAge').value.trim();
+    const childGender = document.getElementById('childGender').value;
+    const guardian = document.getElementById('guardian').value.trim();
+    const reason = document.getElementById('reason').value.trim();
+    const requesterName = document.getElementById('requesterName').value.trim();
+    const requesterEmail = document.getElementById('requesterEmail').value.trim();
+    const requesterPhone = document.getElementById('requesterPhone').value.trim();
+
+    // Validation
+    if (!childName) { alert("❌ Please enter the child's full name."); return; }
+    if (!guardian) { alert("❌ Please enter guardian/household name."); return; }
+    if (!reason) { alert("❌ Please provide a reason for adding this orphan."); return; }
+    if (!requesterName) { alert("❌ Please enter your name."); return; }
+    if (!requesterEmail) { alert("❌ Please enter your email address."); return; }
+    if (!requesterEmail.includes('@')) { alert("❌ Enter a valid email."); return; }
+
+    // Build email body
+    let subject = `[Orphan Addition Request] ${childName}`;
+    let body = `Hello Admin,
+
+A request to add a new orphan has been submitted.
+
+--- Child Information ---
+Full Name: ${childName}
+Age/DOB: ${childAge || "Not provided"}
+Gender: ${childGender || "Not specified"}
+Guardian/Household: ${guardian}
+
+--- Reason for Addition ---
+${reason}
+
+--- Requester Details ---
+Name: ${requesterName}
+Email: ${requesterEmail}
+Phone: ${requesterPhone || "Not provided"}
+
+Please review this request and take appropriate action. Once approved, the measurement form can be shared.
+
+Thank you,
+${requesterName}
+`;
+
+    // Create mailto link
+    const mailtoLink = `mailto:${adminEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+
+    // Optional feedback
+    alert("📧 Your email client will now open. Please send the message to complete your request. The admin will respond shortly.");
+  });
+
+  document.getElementById('backHomeBtn').addEventListener('click', function() {
+    window.location.href = "./"; // or landing page
+  });
+</script>
+</body>
+</html>

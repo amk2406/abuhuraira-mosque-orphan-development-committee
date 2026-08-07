@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Abuhuraira Mosque | Advanced Orphan Records Search</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link rel="stylesheet" href="./static/font-icon/css/all.min.css">
+  <link rel="shortcut icon" href="./staticlogo.png" type="image/x-icon">
+  <link rel="stylesheet" href="./static/style/orphan-search.css">
+  <link rel="stylesheet" href="./static/style/thumb-scroll.css">
+</head>
+<body>
+<div class="search-container">
+  <div class="header-bar">
+    <div class="logo">
+      <h1><i class="fas fa-magnifying-glass"></i> Orphan Record Search</h1>
+    </div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="goHomeBtn"><i class="fas fa-home"></i> Home</button>
+      <button class="nav-btn" id="goRequestBtn"><i class="fas fa-search"></i> Orphan Request</button>
+      <button class="nav-btn primary" id="navAbout"><i class="fas fa-heart"></i> About Us</button>
+     </div>
+  </div>
+
+  <!-- Advanced Search Filters -->
+  <div class="search-panel">
+    <div class="search-title">
+      <i class="fas fa-sliders-h"></i>
+      <h2>Advanced Search Filters</h2>
+    </div>
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label><i class="fas fa-user"></i> Full Name</label>
+        <input type="text" id="searchName" placeholder="Type name...">
+      </div>
+      <div class="filter-group">
+        <label><i class="fas fa-home"></i> Household</label>
+        <input type="text" id="searchHousehold" placeholder="Household / gidan">
+      </div>
+      <div class="filter-group">
+        <label><i class="fas fa-venus-mars"></i> Gender</label>
+        <select id="searchGender">
+          <option value="">All</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+    </div>
+    <div class="search-actions">
+      <button class="btn-reset" id="resetFiltersBtn"><i class="fas fa-eraser"></i> Reset Filters</button>
+      <button class="btn-search" id="applySearchBtn"><i class="fas fa-search"></i> Search Records</button>
+    </div>
+  </div>
+
+  <!-- Stats + Export -->
+  <div class="stats-bar">
+    <div class="stats-info">
+      <i class="fas fa-database"></i>
+      <span id="resultCount">0</span> records found
+      <span class="badge" id="totalRecordsBadge"><i class="fas fa-users"></i> Total: 0</span>
+    </div>
+    <button class="export-btn" id="exportCsvBtn"><i class="fas fa-file-csv"></i> Export CSV</button>
+  </div>
+
+  <!-- Results Table -->
+  <div class="results-wrapper">
+    <table class="records-table" id="recordsTable">
+      <thead>
+        <tr>
+          <th><i class="fas fa-user"></i> Name</th>
+          <th><i class="fas fa-home"></i> Household</th>
+          <th><i class="fas fa-venus-mars"></i> Gender</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr class="empty-row"><td colspan="7"><i class="fas fa-inbox"></i> No records found. Add orphan records from the main form.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Detail -->
+<div id="detailModal" class="modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3><i class="fas fa-id-card"></i> Complete Orphan Details</h3>
+      <button class="close-modal" id="closeModalBtn">&times;</button>
+    </div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"><i class="fas fa-info-circle"></i> <span id="toastText">Ready</span></div>
+
+<script>
+  // ---------- Data Management ----------
+  // Storage key used by main form (orphan_records_all)
+  let recordsArray = [];
+
+  function loadRecordsFromStorage() {
+    const stored = localStorage.getItem('orphan_records_all');
+    if(stored) {
+      recordsArray = JSON.parse(stored);
+    } else {
+      // Create demo dummy records for showcase if empty, to make search page interesting
+      const demoRecords = [
+      ];
+      // Check if there is data from form (maybe orphan_garment_last but not full array)
+      const singleRecord = localStorage.getItem('orphan_garment_last');
+      if(singleRecord && !stored) {
+        try {
+          const one = JSON.parse(singleRecord);
+          if(one.fullName) recordsArray = [one];
+          else recordsArray = demoRecords;
+        } catch(e) { recordsArray = demoRecords; }
+      } else {
+        recordsArray = demoRecords;
+      }
+      // save demo to localStorage to keep consistency
+      localStorage.setItem('orphan_records_all', JSON.stringify(recordsArray));
+    }
+    updateTotalBadge();
+    renderTable(recordsArray);
+  }
+
+  function updateTotalBadge() {
+    const totalSpan = document.getElementById('totalRecordsBadge');
+    if(totalSpan) totalSpan.innerHTML = `<i class="fas fa-users"></i> Total: ${recordsArray.length}`;
+  }
+
+  function renderTable(filteredData) {
+    const tbody = document.getElementById('tableBody');
+    const countSpan = document.getElementById('resultCount');
+    if(!filteredData.length) {
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="7"><i class="fas fa-search"></i> No matching records found.</td></tr>`;
+      countSpan.innerText = '0';
+      return;
+    }
+    countSpan.innerText = filteredData.length;
+    let html = '';
+    filteredData.forEach((record, idx) => {
+      const garment = record.garmentType || '—';
+      const reg = record.regDate || 'N/A';
+      const phone = record.phone || '—';
+      const gender = record.gender || '—';
+      html += `
+        <tr>
+          <td><strong>${escapeHtml(record.fullName) || 'Unnamed'}</strong></td>
+          <td>${escapeHtml(record.household) || '—'}</td>
+          <td>${escapeHtml(gender)}</td>
+          <td><span class="badge">${escapeHtml(garment)}</span></td>
+          <td>${escapeHtml(reg)}</td>
+          <td>${escapeHtml(phone)}</td>
+          <td>
+            <button class="view-details" data-index="${idx}" data-original-idx="${recordsArray.findIndex(r => r.timestamp === record.timestamp && r.fullName === record.fullName)}" title="View full details"><i class="fas fa-eye"></i></button>
+            <button class="delete-record-btn" data-timestamp="${record.timestamp || ''}" data-name="${escapeHtml(record.fullName)}" style="background:none; border:none; color:#b91c1c; cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      `;
+    });
+    tbody.innerHTML = html;
+
+    // attach view events
+    document.querySelectorAll('.view-details').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idxAttr = btn.getAttribute('data-index');
+        const filteredArr = filteredData;
+        if(filteredArr[parseInt(idxAttr)]) {
+          showDetailModal(filteredArr[parseInt(idxAttr)]);
+        }
+      });
+    });
+    // attach delete events
+    document.querySelectorAll('.delete-record-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const timestamp = btn.getAttribute('data-timestamp');
+        const name = btn.getAttribute('data-name');
+        if(confirm(`⚠️ Delete record for ${name}? This action is permanent.`)) {
+          if(timestamp) {
+            recordsArray = recordsArray.filter(r => r.timestamp !== timestamp);
+          } else {
+            // fallback by name+household
+            const nm = btn.getAttribute('data-name');
+            recordsArray = recordsArray.filter(r => r.fullName !== nm);
+          }
+          localStorage.setItem('orphan_records_all', JSON.stringify(recordsArray));
+          showToast(`🗑️ Deleted ${name}`, false);
+          applyFiltersAndRender(); // re-render with current filter state
+          updateTotalBadge();
+        }
+      });
+    });
+  }
+
+  function escapeHtml(str) {
+    if(!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if(m === '&') return '&amp;';
+      if(m === '<') return '&lt;';
+      if(m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function showDetailModal(record) {
+    const modal = document.getElementById('detailModal');
+    const modalContent = document.getElementById('modalContent');
+    const measurementHtml = `
+      <div class="details-grid">
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-user"></i> Full Name</div><div>${escapeHtml(record.fullName) || '—'}</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-home"></i> Household</div><div>${escapeHtml(record.household) || '—'}</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-map-pin"></i> Address</div><div>${escapeHtml(record.address) || '—'}</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-phone"></i> Phone</div><div>${escapeHtml(record.phone) || '—'}</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-venus-mars"></i> Gender</div><div>${escapeHtml(record.gender) || '—'}</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-calendar"></i> Reg Date</div><div>${escapeHtml(record.regDate) || '—'}</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-ruler"></i> Shoulder / Chest</div><div>${record.shoulder || '—'} cm / ${record.chest || '—'} cm</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-ruler"></i> Waist / Neck</div><div>${record.waist || '—'} cm / ${record.neck || '—'} cm</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-ruler"></i> Sleeve / Length</div><div>${record.sleeve || '—'} cm / ${record.trouserLength || record['Trouser or Skirt Length'] || '—'} cm</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-vest"></i> Garment Type</div><div>${escapeHtml(record.garmentType) || '—'}</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-palette"></i> Style/Design</div><div>${escapeHtml(record.styleDesign) || '—'}</div></div>
+        <div class="detail-item"><div class="detail-label"><i class="fas fa-comment"></i> Notes</div><div>${escapeHtml(record.notes) || '—'}</div></div>
+      </div>
+    `;
+    modalContent.innerHTML = measurementHtml;
+    modal.style.display = 'flex';
+  }
+
+  // Advanced Filter + search
+  function applyFiltersAndRender() {
+    let filtered = [...recordsArray];
+    const nameFilter = document.getElementById('searchName').value.trim().toLowerCase();
+    const householdFilter = document.getElementById('searchHousehold').value.trim().toLowerCase();
+    const genderFilter = document.getElementById('searchGender').value;
+    const garmentFilter = document.getElementById('searchGarment').value.trim().toLowerCase();
+    const dateFrom = document.getElementById('dateFrom').value;
+    const dateTo = document.getElementById('dateTo').value;
+
+    if(nameFilter) filtered = filtered.filter(r => (r.fullName || '').toLowerCase().includes(nameFilter));
+    if(householdFilter) filtered = filtered.filter(r => (r.household || '').toLowerCase().includes(householdFilter));
+    if(genderFilter) filtered = filtered.filter(r => r.gender === genderFilter);
+    if(garmentFilter) filtered = filtered.filter(r => (r.garmentType || '').toLowerCase().includes(garmentFilter));
+    if(dateFrom) filtered = filtered.filter(r => (r.regDate || '') >= dateFrom);
+    if(dateTo) filtered = filtered.filter(r => (r.regDate || '') <= dateTo);
+
+    renderTable(filtered);
+  }
+
+  function resetFilters() {
+    document.getElementById('searchName').value = '';
+    document.getElementById('searchHousehold').value = '';
+    document.getElementById('searchGender').value = '';
+    document.getElementById('searchGarment').value = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+    applyFiltersAndRender();
+    showToast('🧹 Filters cleared, showing all records', false);
+  }
+
+  function exportToCSV() {
+    if(!recordsArray.length) { showToast('No records to export', true); return; }
+    let csvRows = [["Full Name","Household","Gender","Phone","Address","Garment Type","Style","Reg Date","Shoulder","Chest","Waist","Neck","Sleeve","TrouserLength","Notes"]];
+    for(let rec of recordsArray) {
+      csvRows.push([
+        `"${(rec.fullName || '').replace(/"/g, '""')}"`,
+        `"${(rec.household || '').replace(/"/g, '""')}"`,
+        rec.gender || '',
+        rec.phone || '',
+        rec.address || '',
+        rec.garmentType || '',
+        rec.styleDesign || '',
+        rec.regDate || '',
+        rec.shoulder || '',
+        rec.chest || '',
+        rec.waist || '',
+        rec.neck || '',
+        rec.sleeve || '',
+        rec.trouserLength || '',
+        `"${(rec.notes || '').replace(/"/g, '""')}"`
+      ]);
+    }
+    const csvContent = csvRows.map(row => row.join(",")).join("\n");
+    const blob = new Blob([csvContent], {type: "text/csv"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `orphan_records_${new Date().toISOString().slice(0,19)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📎 CSV exported successfully', false);
+  }
+
+  function showToast(msg, isErr = false) {
+    const toastDiv = document.getElementById('toastMsg');
+    const textSpan = document.getElementById('toastText');
+    textSpan.innerText = msg;
+    toastDiv.style.background = isErr ? '#b91c1c' : '#1f5e3a';
+    toastDiv.style.opacity = '1';
+    setTimeout(() => { toastDiv.style.opacity = '0'; }, 2500);
+  }
+
+  // flatpickr dates
+  document.getElementById('navAbout').addEventListener('click', () => navigateTo('ABOUT_PAGE', 'about'));
+  document.getElementById('goHomeBtn').addEventListener('click', () => {navigateTo('Home-page', '')});
+  document.getElementById('goRequestBtn').addEventListener('click', () => navigateTo('ABOUT_PAGE', 'orphan-request'));
+  
+  function navigateTo(page, name) {
+    window.location.href = './static/'+name+'.html'
+  }
+  // Event listeners
+  document.getElementById('applySearchBtn').addEventListener('click', applyFiltersAndRender);
+  document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
+  document.getElementById('exportCsvBtn').addEventListener('click', exportToCSV);
+  document.getElementById('closeModalBtn').addEventListener('click', () => { document.getElementById('detailModal').style.display = 'none'; });
+  window.addEventListener('click', (e) => { if(e.target === document.getElementById('detailModal')) document.getElementById('detailModal').style.display = 'none'; });
+
+  loadRecordsFromStorage();
+</script>
+</body>
+</html>

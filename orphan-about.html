@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Abuhuraira Mosque | About Orphan Care System</title>
+  <link rel="stylesheet" href="./static/font-icon/css/all.min.css">
+  <link rel="stylesheet" href="./static/style/thumb-scroll.css">
+  <link rel="shortcut icon" href="./static/logo.png" type="image/x-icon">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #e0e8f0 100%);
+      font-family: 'Inter', sans-serif, 'Segoe UI';
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+    }
+
+    .about-container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* Navigation / Header */
+    .nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-area i {
+      font-size: 2rem;
+      color: #1e6b3b;
+    }
+
+    .logo-area h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1e5631, #0a3a1f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-btn {
+      background: white;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: #2c3e2f;
+      font-family: inherit;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .nav-btn i {
+      font-size: 0.9rem;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      background: #f0f7f0;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+    }
+
+    .nav-btn.primary {
+      background: #1e5631;
+      color: white;
+    }
+    .nav-btn.primary:hover {
+      background: #0f4427;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(120deg, #ffffff 0%, #fefcf5 100%);
+      border-radius: 2rem;
+      padding: 2.5rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+      text-align: center;
+      border: 1px solid rgba(100, 116, 139, 0.1);
+    }
+
+    .hero-icon {
+      font-size: 4rem;
+      color: #2b6e3c;
+      margin-bottom: 1rem;
+    }
+
+    .hero-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1f2e23;
+      margin-bottom: 1rem;
+    }
+
+    .hero-section p {
+      font-size: 1.1rem;
+      color: #4a5b6b;
+      max-width: 750px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Mission & Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 1.8rem;
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      transition: all 0.25s;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+    }
+
+    .stat-icon {
+      font-size: 2.8rem;
+      color: #2b6e3c;
+      margin-bottom: 1rem;
+    }
+
+    .stat-card h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1e5631;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card p {
+      color: #5c6f87;
+      font-weight: 500;
+    }
+
+    /* Two Column: About Details + Features */
+    .info-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .info-panel {
+      background: white;
+      border-radius: 1.8rem;
+      padding: 1.8rem;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    }
+
+    .info-panel h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1e3a2f;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-left: 5px solid #2b6e3c;
+      padding-left: 1rem;
+    }
+
+    .info-panel p {
+      color: #334155;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .feature-list li {
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #2d3e50;
+    }
+
+    .feature-list li i {
+      width: 28px;
+      color: #2b6e3c;
+      font-size: 1.2rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .team-member {
+      background: #f8fafc;
+      border-radius: 1.4rem;
+      padding: 1rem;
+      text-align: center;
+    }
+    .team-member i {
+      font-size: 2.5rem;
+      color: #446b54;
+      margin-bottom: 6px;
+    }
+    .team-member h4 {
+      font-weight: 700;
+    }
+
+    /* Timeline / Mosque section */
+    .mosque-section {
+      background: linear-gradient(115deg, #f2f6ea, #ffffff);
+      border-radius: 1.8rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid #dce5cf;
+    }
+
+    .verse {
+      font-style: italic;
+      background: #eef5e9;
+      padding: 1.2rem;
+      border-radius: 1.5rem;
+      margin: 1rem 0;
+      text-align: center;
+      color: #2c5a2e;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem 0;
+      color: #5a6e7c;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    /* Toast message (small feedback) */
+    .toast-msg {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #1f2e23;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1100;
+      opacity: 0;
+      transition: 0.2s;
+      pointer-events: none;
+      font-family: monospace;
+    }
+
+    @media (max-width: 780px) {
+      .info-split {
+        grid-template-columns: 1fr;
+      }
+      body {
+        padding: 1rem;
+      }
+      .hero-section h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="about-container">
+  <!-- Navigation Bar -->
+  <div class="nav-bar">
+    <div class="logo-area">
+      <i class="fas fa-mosque"></i>
+      <h1>Abuhuraira Orphan Care</h1>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn" id="goHomeBtn"><i class="fas fa-home"></i> Home</button>
+      <button class="nav-btn" id="goSearchBtn"><i class="fas fa-user-plus"></i> Orphan Request</button>
+      <button class="nav-btn primary" id="refreshAboutBtn"><i class="fas fa-heart"></i> About Us</button>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-icon">
+      <i class="fas fa-hands-helping"></i>
+    </div>
+    <h2>Empowering Orphans Through Dignity & Care</h2>
+    <p>Abuhuraira Mosque’s Orphan Measurement & Garment System ensures every registered orphan receives custom-fitted clothing with love, precision, and dignity.</p>
+  </div>
+
+  <!-- Stats / Impact Metrics -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-child"></i></div>
+      <h3>100+</h3>
+      <p>Orphans Supported</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-tshirt"></i></div>
+      <h3>420+</h3>
+      <p>Garments Tailored</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+      <h3>2023</h3>
+      <p>Year of Foundation</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-users"></i></div>
+      <h3>12</h3>
+      <p>Active Volunteers</p>
+    </div>
+  </div>
+
+  <!-- Main Info Split: About the System + Our Mission -->
+  <div class="info-split">
+    <!--<div class="info-panel">
+      <h3><i class="fas fa-info-circle"></i> About the Measurement System</h3>
+      <p>This digital platform was designed to streamline the process of recording orphans’ body measurements, personal details, and garment preferences. It replaces paper forms with a secure, user-friendly interface that can be accessed by mosque volunteers, tailors, and coordinators.</p>
+      <p><strong>Key features include:</strong></p>
+      <ul class="feature-list">
+        <li><i class="fas fa-vector-square"></i> Accurate shoulder, chest, waist & sleeve measurements</li>
+        <li><i class="fas fa-palette"></i> Garment type & style design tracking (Kaftan, Thobe, Dress, etc.)</li>
+        <li><i class="fas fa-database"></i> Secure database storage with search capabilities</li>
+        <li><i class="fas fa-mobile-alt"></i> Mobile-friendly, responsive</li>
+        <li><i class="fas fa-chart-line"></i> Real-time record updates management</li>
+      </ul>
+    </div>-->
+    <div class="info-panel">
+      <h3><i class="fas fa-bullhorn"></i> Our Mission & Vision</h3>
+      <p>At Abuhuraira Mosque, we believe every orphan deserves to feel special and well-cared for. Our mission is to provide tailored clothing that preserves their dignity and brings joy during Eid, special events, and winter seasons.</p>
+      <p>We work closely with local tailors and use precise measurements collected through this system to ensure a perfect fit. We envision a future where no orphan in our community lacks proper clothing.</p>
+      <div class="verse">
+        <i class="fas fa-quran"></i> "They ask you, what they should spend. Say, whatever good you spend is for parents, relatives, orphans, the needy, and the traveler." — (Qur'an 2:215)
+      </div>
+    </div>
+  </div>
+
+  <!-- Team & Mosque Committee -->
+  <div class="mosque-section">
+    <h3 style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem;"><i class="fas fa-user-friends"></i> Orphan Care Committee</h3>
+    <div class="team-grid">
+      <div class="team-member">
+        <i class="fas fa-user-circle"></i>
+        <h4>Mal Kabiru</h4>
+        <p>Program Director</p>
+      </div>
+      <div class="team-member">
+        <i class="fas fa-female"></i>
+        <h4>Ismail Khalil</h4>
+        <p>Measurement Coordinator</p>
+      </div>
+      <div class="team-member">
+        <i class="fas fa-user-tie"></i>
+        <h4>Oga Police</h4>
+        <p>Tailor Liaison</p>
+      </div>
+      <div class="team-member">
+        <i class="fas fa-laptop-code"></i>
+        <h4>Abdulhamid</h4>
+        <p>System Maintainers</p>
+      </div>
+    </div>
+    <p style="margin-top: 1.2rem; font-size: 0.9rem; color: #475569;"><i class="fas fa-envelope"></i> Contact: orphan.care@abuhuraira.org  |  Hotline: +234 802 345 6789</p>
+  </div>
+
+  <!-- Tech & Privacy Note -->
+  <div class="info-split" style="margin-bottom: 1rem;">
+    <div class="info-panel">
+      <h3><i class="fas fa-shield-alt"></i> Privacy & Data Ethics</h3>
+      <p>All personal and measurement data is stored securely on a database, respecting the privacy of each orphan. The information is only accessible to authorized mosque staff and is never shared without consent. We use industry-standard practices to ensure confidentiality.</p>
+    </div>
+    <div class="info-panel">
+      <h3><i class="fas fa-tools"></i> System Version & Support</h3>
+      <p>Current Version: 2.0 (Advanced UX Release). Built with modern web technologies (HTML5, CSS3, FontAwesome, and JavaScript). For technical feedback, suggestions, or bug reports, please reach out to the Abuhuraira IT team via the contact email above.</p>
+      <p><i class="fas fa-code-branch"></i> Last updated: June 2026 – optimized for desktop and mobile devices.</p>
+    </div>
+  </div>
+
+  <footer>
+    <i class="fas fa-mosque"></i> copyright abuhuraira mosque © 2026
+    <i class="fas fa-heart" style="color:#ca6f6f;"></i> Orphan Support Initiative
+    <i class="fas fa-globe"></i> Danmasara Gabas, Jigawa State, Nigeria
+  </footer>
+</div>
+
+<div id="toastMessage" class="toast-msg"><i class="fas fa-info-circle"></i> <span id="toastText">Welcome to About page</span></div>
+
+<script>
+  // Simple toast function for user feedback
+  const toast = document.getElementById('toastMessage');
+  function showToastMessage(msg, isError = false) {
+    const toastSpan = document.getElementById('toastText');
+    toastSpan.innerText = msg;
+    toast.style.background = isError ? '#9e2a2a' : '#1f5e3a';
+    toast.style.opacity = '1';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+
+  // Navigation handlers
+  const goHomeBtn = document.getElementById('goHomeBtn');
+  const goSearchBtn = document.getElementById('goSearchBtn');
+  const refreshAboutBtn = document.getElementById('refreshAboutBtn');
+
+  if (goHomeBtn) {
+    goHomeBtn.addEventListener('click', () => {
+      window.location.href = './'; // main form page
+    });
+  }
+  if (goSearchBtn) {
+    goSearchBtn.addEventListener('click', () => {
+      window.location.href = 'orphan-request.html'; // search results page
+    });
+  }
+  if (refreshAboutBtn) {
+    refreshAboutBtn.addEventListener('click', () => {
+      showToastMessage("📍 You're on the About page — learn about our mission", false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => {
+        location.reload()
+      }, 800);
+    });
+  }
+
+  // If there is no index.html fallback, but we simulate info: demo ready
+  // Also show small welcome
+  window.addEventListener('load', () => {
+    showToastMessage("✨ Abuhuraira Orphan Care System | Serving dignity", false);
+  });
+</script>
+</body>
+</html>
